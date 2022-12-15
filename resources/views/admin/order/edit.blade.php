@@ -1,29 +1,44 @@
 @extends('admin.layout.main')
 
 @section('content')
-    <form action="{{route($model.'.update', $menu->id)}}" method="post" enctype="multipart/form-data" class="mt-4">
+    <form action="{{route($model.'.update', $order->id)}}" method="post" enctype="multipart/form-data" class="mt-4">
         @csrf
         @method('put')
+        <input type="hidden" name="payment_name" value="{{$order->payment_name}}}">
         <div class="position-relative row form-group">
             <label for="name" class="col-md-3 text-md-right col-form-label">Name</label>
             <div class="col-md-9 col-xl-8">
-                <input required="" name="name" id="name" placeholder="Name" type="text" class="form-control" value="{{$menu->name}}">
+                <input required="" name="name" id="name" placeholder="Name" type="text" class="form-control" value="{{$order->name}}">
             </div>
         </div>
         <div class="position-relative row form-group">
-            <label for="parent_id" class="col-md-3 text-md-right col-form-label">Danh Mục Cha</label>
+            <label for="email" class="col-md-3 text-md-right col-form-label">Email</label>
             <div class="col-md-9 col-xl-8">
-                <select class="form-control" id="parent_id" name="parent_id">
-                    <option value="0">Danh Mục Cha</option>
-                    {!! $menus !!}
+                <input required="" name="email" id="email" placeholder="email" type="text" class="form-control" value="{{$order->email}}">
+            </div>
+        </div>
+        <div class="position-relative row form-group">
+            <label for="phone" class="col-md-3 text-md-right col-form-label">Phone</label>
+            <div class="col-md-9 col-xl-8">
+                <input required="" name="phone" id="phone" placeholder="phone" type="text" class="form-control" value="{{$order->phone}}">
+            </div>
+        </div>
+        <div class="position-relative row form-group">
+            <label for="address" class="col-md-3 text-md-right col-form-label">Address</label>
+            <div class="col-md-9 col-xl-8">
+                <input required="" name="address" id="address" placeholder="address" type="text" class="form-control" value="{{$order->address}}">
+            </div>
+        </div>
+        <div class="position-relative row form-group">
+            <label for="status" class="col-md-3 text-md-right col-form-label">Status</label>
+            <div class="col-md-9 col-xl-8">
+                <select name="status"  class="form-control">
+                    <option {{$order->status == 1 ? 'selected' : ''}} value="1">wait for confirmation</option>
+                    <option {{$order->status == 2 ? 'selected' : ''}} value="2">Delivering</option>
+                    <option {{$order->status == 3 ? 'selected' : ''}} value="3">Complete</option>
+                    <option {{$order->status == 4 ? 'selected' : ''}} value="4">Cancelled Order</option>
                 </select>
             </div>
-        </div>
-        <div class="position-relative row form-group">
-            <label for="display" class="col-md-3 text-md-right col-form-label">Hiện</label>
-            <input required="" name="status" id="display" placeholder="Name" type="radio" value="1" {{$background->status == 1 ? 'checked' : ''}}>
-            <label for="hidden" class="mx-3 col-form-label">Ẩn</label>
-            <input required="" name="status" id="hidden" placeholder="Name" type="radio" value="0" {{$background->status == 0 ? 'checked' : ''}}>
         </div>
         <div class="position-relative row form-group mb-1">
             <div class="col-md-9 col-xl-8 offset-md-2">

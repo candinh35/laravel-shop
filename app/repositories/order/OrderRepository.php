@@ -17,4 +17,5 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
     {
        return $this->model->search()->orderByDesc('created_at')->paginate(5);
     }
+
 }

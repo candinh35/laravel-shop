@@ -45,6 +45,8 @@ Route::middleware('auth')->group(function (){
         Route::resource('admin/contact', ContactController::class);
         Route::resource('role', RoleController::class);
         Route::resource('permission', PermissionController::class);
+
+        Route::get('orderPdf/{checkout_code}', [OrderController::class, 'print_order'])->name('order.inPdf');
     });
 });
 

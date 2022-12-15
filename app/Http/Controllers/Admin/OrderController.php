@@ -5,15 +5,40 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\repositories\order\OrderRepositoryInterface;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
 
+
+
     protected $orderRepo;
+    private string $model = 'order';
+    private string $title = 'order';
 
     public function __construct(OrderRepositoryInterface $orderRepository)
     {
         $this->orderRepo = $orderRepository;
+    }
+//  in ra file PDF
+     public function print_order($checkout_code)
+    {
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->print_order_convert($checkout_code));
+        return $pdf->stream();
+    }
+
+    public function print_order_convert($checkout_code)
+    {
+        $order = $this->orderRepo->find($checkout_code);
+        return view('admin.order.bill',compact('order'));
+    }
+
+//    cạp nhật Status
+
+    public function updateStatus($id,$status)
+    {
+        dd($id);
     }
 
     /**
@@ -25,8 +50,8 @@ class OrderController extends Controller
     {
         $orders = $this->orderRepo->getOrder();
         return view('admin.order.index',[
-           'model'=>'order',
-           'title'=>'order',
+           'model'=>$this->model,
+           'title'=>$this->title,
             'orders'=>$orders
         ]);
     }
@@ -56,22 +81,32 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function show($id)
     {
-        //
+        $order = $this->orderRepo->find($id);
+        return view('admin.order.show', [
+           'model'=>$this->model,
+           'title'=>$this->title,
+           'order'=>$order,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function edit($id)
     {
-        //
+        $order = $this->orderRepo->find($id);
+        return view('admin.order.edit', [
+            'model'=>$this->model,
+            'title'=>$this->title,
+            'order'=>$order,
+        ]);
     }
 
     /**
@@ -79,11 +114,13 @@ class OrderController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->orderRepo->update($id, $request->all());
+
+        return back()->with('success', 'Update Success');
     }
 
     /**

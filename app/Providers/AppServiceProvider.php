@@ -15,6 +15,8 @@ use App\repositories\blog\BlogRepository;
 use App\repositories\blog\BlogRepositoryInterface;
 use App\repositories\menu\MenuRepository;
 use App\repositories\menu\MenuRepositoryInterface;
+use App\repositories\order\OrderRepository;
+use App\repositories\order\OrderRepositoryInterface;
 use App\repositories\product\ProductRepository;
 use App\repositories\product\ProductRepositoryInterface;
 use App\repositories\role\RoleRepository;
@@ -70,6 +72,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             BlogRepositoryInterface::class,
             BlogRepository::class,
+        );
+        $this->app->singleton(
+            OrderRepositoryInterface::class,
+            OrderRepository::class,
         );
 
     }

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Api\PermissionController;
 use App\Http\Controllers\Admin\Api\ProductCommentController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Client\HomeController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,5 @@ Route::get('/getProduct/{category_id}', [HomeController::class, 'getProduct']);
 
 Route::get('/product/comment/{id}', [ProductCommentController::class, 'index'])->name('comment');
 Route::post('/product/comment/add', [ProductCommentController::class, 'addForm']);
+
+Route::get('orderStatus/{id}/{status}', [OrderController::class, 'updateStatus'])->name('order.status');
