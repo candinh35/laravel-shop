@@ -21,9 +21,9 @@
         </div>
         <div class="position-relative row form-group">
             <label for="display" class="col-md-3 text-md-right col-form-label">Hiện</label>
-            <input required="" name="status" id="display" placeholder="Name" type="radio" value="1" {{$background->status == 1 ? 'checked' : ''}}>
+            <input required="" name="status" id="display" placeholder="Name" type="radio" value="1" {{$category->status == 1 ? 'checked' : ''}}>
             <label for="hidden" class="mx-3 col-form-label">Ẩn</label>
-            <input required="" name="status" id="hidden" placeholder="Name" type="radio" value="0" {{$background->status == 0 ? 'checked' : ''}}>
+            <input required="" name="status" id="hidden" placeholder="Name" type="radio" value="0" {{$category->status == 0 ? 'checked' : ''}}>
         </div>
         <div class="position-relative row form-group mb-1">
             <div class="col-md-9 col-xl-8 offset-md-2">

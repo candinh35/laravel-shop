@@ -16,6 +16,7 @@ class ProductDetailController extends Controller
     public  function  index($id)
     {
         $product = $this->productRepo->find($id);
+
         $relatedProducts = $this->productRepo->getRelateProduct($product->category_id);
         return view('client.productDetail', compact('product', 'relatedProducts'));
     }

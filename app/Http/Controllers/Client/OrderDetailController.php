@@ -10,6 +10,7 @@ class OrderDetailController extends Controller
 {
     public function index($user_id)
     {
+
         $orders = Order::where('user_id', $user_id)->orderByDesc('created_at')->get();
         return view('client.orderDetail', compact('orders'));
     }

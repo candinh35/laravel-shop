@@ -27,7 +27,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
 
     public function getProduct()
     {
-        return $this->model->search()->paginate(5);
+        return $this->model->search()->orderBy('created_at', 'Desc')->paginate(5);
     }
 
 //    lấy ra category
@@ -204,6 +204,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                     $sizeId = Size::firstOrCreate([
                         'name' => $sizeName
                     ]);
+                    $a = $sizeId;
 //                    Product_size
                     $product->productSizes()->sync([
                         'product_id' =>$product->id,
@@ -211,7 +212,6 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
                     ]);
                 }
             }
-
             DB::commit();
             return redirect()->back()->with('success', 'Sửa Sản Phẩm Thành Công');
         } catch (\Exception $err) {
@@ -245,7 +245,7 @@ class ProductRepository extends BaseRepository implements ProductRepositoryInter
     }
     public function getProductShop()
     {
-        return $this->model->search()->paginate(12);
+        return $this->model->search()->orderBy('created_at', 'Desc')->paginate(12);
     }
 
     public  function getRelateProduct( $category_id)

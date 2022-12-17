@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserAddRequest;
 use App\repositories\user\UserRepositoryInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Log;
@@ -120,4 +121,6 @@ class UserController extends Controller
             return redirect()->back()->with('success', 'Xóa Thành Công');
         }
     }
+
+
 }

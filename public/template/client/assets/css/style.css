@@ -6154,6 +6154,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .single_product {
   margin-bottom: 40px;
+    padding: 10px;
+    box-shadow: 2px 2px 13px -6px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 2px 2px 13px -6px rgba(0, 0, 0, 0.3);
 }
 @media only screen and (min-width: 1200px) and (max-width: 1600px) {
   .single_product {
@@ -13127,5 +13130,16 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     width: 70px;
     margin-right: 10px;
 }
+
+
+
+/*Product*/
+
+.single_product:hover{
+    padding: 10px;
+    box-shadow: 1px 1px 20px -4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 1px 1px 20px -4px rgba(0, 0, 0, 0.5);
+}
+
 
 /*# sourceMappingURL=style.css.map */

@@ -58,14 +58,31 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="account_form register">
                         <h2>Register</h2>
-                        <form action="#">
+                        <form action="{{route('client_register')}}" method="post">
+                            @csrf
                             <p>
-                                <label>Email address  <span>*</span></label>
-                                <input type="text">
+                                <label>Name  <span>*</span></label>
+                                <input type="text" name="name" value="{{old('name')}}" >
+                            </p>
+                            <p>
+                                <label>Email <span>*</span></label>
+                                <input type="text" name="email" value="{{old('email')}}">
                             </p>
                             <p>
                                 <label>Passwords <span>*</span></label>
-                                <input type="password">
+                                <input type="password" name="password" value="{{old('password')}}">
+                            </p>
+                            <p>
+                                <label>Confirm Passwords <span>*</span></label>
+                                <input type="password" name="confirm_password" value="{{old('confirm_password')}}">
+                            </p>
+                            <p>
+                                <label>Phone <span>*</span></label>
+                                <input type="text" name="phone" value="{{old('phone')}}">
+                            </p>
+                            <p>
+                                <label>Address <span>*</span></label>
+                                <input type="text" name="address" value="{{old('address')}}">
                             </p>
                             <div class="login_submit">
                                 <button type="submit">Register</button>

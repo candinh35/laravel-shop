@@ -87,7 +87,7 @@ define('BASE_URL', "http://127.0.0.1:8000/");
 
                             <div class="product_variant color">
                                 <h3>color</h3>
-                                <select class="niceselect_option " id="color" name="color">
+                                <select class="niceselect_option form-control" id="color" name="color">
                                     @foreach($product->productColors  as $color)
                                         <option value="{{$color->id}}">{{$color->name}}</option>
                                     @endforeach
@@ -95,7 +95,7 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                             </div>
                             <div class="product_variant size">
                                 <h3>size</h3>
-                                <select class="niceselect_option" id="color1" name="size">
+                                <select class="niceselect_option form-control" id="color1" name="size">
                                     @foreach($product->productSizes  as $size)
                                         <option value="{{$size->id}}">{{$size->name}}</option>
                                     @endforeach

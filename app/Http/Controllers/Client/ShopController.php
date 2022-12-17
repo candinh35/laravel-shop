@@ -24,7 +24,7 @@ class ShopController extends Controller
     {
 
 //        TÌm kiếm theo search and sort
-        $products = Product::search();
+        $products = Product::search()->orderBy('id', 'DESC');
         $sortBy = $request->sort_by ?? 'latest';
 
 
@@ -35,7 +35,6 @@ class ShopController extends Controller
         $sizes = Size::get();
         $products = $this->filter($products, $request);
         $products = $this->sort($products, $sortBy);
-
         return view('client.shop',
             compact('categories', 'brands', 'colors', 'sizes', 'products'));
     }

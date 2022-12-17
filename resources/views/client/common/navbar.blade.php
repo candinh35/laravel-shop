@@ -113,16 +113,16 @@
                 </div>
                 <div class="col-lg-5 col-md-12">
                     <div class="top_right text-right">
-                        @if(Auth::check())
+                        @if(Auth::guard('cus')->check())
                             <ul>
                                 <li class="top_links">
                                     <a href="#"><i style="font-size: 17px; margin-right: 5px;color: white"
                                                    class="fa fa-user"></i>
-                                      Hello :  {{Auth::user()->name}}
+                                      Hello :  {{Auth::guard('cus')->user()->name}}
                                         <i class="ion-chevron-down"></i> </a>
                                     <ul class="dropdown_links">
                                         <li><a href="{{route('client_check_logout')}}">Logout</a></li>
-                                        <li><a href="{{route('orderDetail',Auth::id() )}}">Order Management </a></li>
+                                        <li><a href="{{route('orderDetail',Auth::guard('cus')->id() )}}">Order Management </a></li>
                                     </ul>
                                 </li>
                             </ul>

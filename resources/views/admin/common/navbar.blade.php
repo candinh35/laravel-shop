@@ -42,7 +42,13 @@
                         <i class="fa fa-dochub"></i>
                     </a>
                     <ul>
+                        <li>
+                            <a href="{{route('dashboard')}}" class="">
+                                <i class="metismenu-icon"></i>dashboard
+                            </a>
+                        </li>
                         @foreach(config('MenuAdmin.menu') as $key)
+
                             @can($key.'.index')
                             <li>
                             <a href="{{route($key.'.index')}}" class="">

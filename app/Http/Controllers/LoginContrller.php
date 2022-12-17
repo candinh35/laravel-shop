@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class LoginContrller extends Controller
 {
@@ -40,7 +41,7 @@ class LoginContrller extends Controller
             'email'=>$request->email,
             'password'=>$request->password
         ], $request->remember)){
-            return redirect()->route('user.index');
+            return redirect()->route('dashboard');
         }
 
         return redirect()->back()->with('error', 'Email hoặc Password không đúng');
@@ -89,5 +90,21 @@ class LoginContrller extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function logout()
+    {
+
+        Auth::logout();
+
+        return redirect()->route('login');
+    }
+
+//     chuyển đổi ngôn ngữ
+
+    public function loginGoogle()
+    {
+        $lang = new GoogleTranslate('en');
+        return $lang->setSource('en')->setTarget('en')->translate("hello Word");
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AddOrderRequest;
 use App\Models\Order;
 use App\Models\Order_detail;
+use App\Models\Product;
 use App\Utilities\VNPay;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Support\Facades\Auth;
@@ -51,6 +52,9 @@ class CheckOutController extends Controller
             //        thêm vào bảng order
             if ($request->payment_name == 'pay_last') {
 
+
+
+
 //        thêm vào bảng order_detail
                 foreach ($carts as $cart) {
                     $data = [
@@ -62,6 +66,15 @@ class CheckOutController extends Controller
                         'color'=>$cart->options->color,
                         'size'=>$cart->options->size
                     ];
+//                trừ đi số hàng tồn kho
+                    $product = Product::find($cart->id);
+
+                    $newAmount = $product->amount - $cart->qty;
+                    if ($newAmount >= 0){
+                        return redirect()->back()->with('error', 'The product in stock is out of stock! Please choose another product');
+                    }
+                    $product->update(['amount'=>$newAmount]);
+
                     Order_detail::create($data);
                 }
 //            gửi Email

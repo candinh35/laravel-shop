@@ -91,8 +91,8 @@
                                                                 <div class="widget-heading">{{Auth::user()->name}}</div>
                                                             </div>
                                                             <div class="widget-content-right mr-2">
-                                                                <button
-                                                                    class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</button>
+                                                                <a href="{{route('admin.logout')}}"
+                                                                    class="btn-pill btn-shadow btn-shine btn btn-focus">Logout</a>
                                                             </div>
                                                         </div>
                                                     </div>

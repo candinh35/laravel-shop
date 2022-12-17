@@ -18,12 +18,10 @@ class Order extends Model
         'payment_name',
     ];
 
-    public function scopeSearch($query)
+        public function scopeSearch($query)
     {
-        if (request()->has('search')){
-            $key = request()->input('search');
-            return $query->where('name', '%'.$key.'%')->orWhere('email','%'.$key.'%');
-        }
+        $key = request()->input('search');
+        return $query->orWhere('name', 'like', '%'.$key.'%')->orWhere('email', 'like', '%'.$key.'%');
     }
 
     public function orderDetails()

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\repositories\order\OrderRepositoryInterface;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\App;
 
 class OrderController extends Controller
 {
@@ -23,7 +24,7 @@ class OrderController extends Controller
 //  in ra file PDF
      public function print_order($checkout_code)
     {
-        $pdf = \App::make('dompdf.wrapper');
+        $pdf = App::make('dompdf.wrapper');
         $pdf->loadHTML($this->print_order_convert($checkout_code));
         return $pdf->stream();
     }
@@ -38,7 +39,7 @@ class OrderController extends Controller
 
     public function updateStatus($id,$status)
     {
-        dd($id);
+     return  $this->orderRepo->find($id)->update(['status'=>$status]);
     }
 
     /**

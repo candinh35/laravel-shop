@@ -86,9 +86,9 @@
                                             @elseif($order->status == 2)
                                                 <td colspan="3">Delivering</td>
                                             @elseif($order->status == 3)
-                                                <td colspan="3">Complete</td>
+                                                <td colspan="3" class="alert-success">Complete</td>
                                             @elseif($order->status == 4)
-                                                <td colspan="3">Cancelled Order</td>
+                                                <td colspan="3" class="alert-danger">Cancelled Order</td>
                                             @endif
                                         </tr>
                                         </tbody>

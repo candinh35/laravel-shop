@@ -1,6 +1,7 @@
 @extends('admin.layout.main')
 
 @section('content')
+    <div id="notification"></div>
     <table class="align-middle mb-0 table table-borderless table-striped table-hover">
         <thead>
         <tr>
@@ -20,12 +21,18 @@
                 <td class="text-center">{{$order->name}}</td>
                 <td class="text-center">{{$order->email}}</td>
                 <td width="180">
-                    <select name="status" onchange="updateData({{$order->id}})" id="{{$order->id}}"  data-id="{{$order->id}}" class="form-control statusOrder">
-                        <option {{$order->status == 1 ? 'selected' : ''}} value="1">wait for confirmation</option>
-                        <option {{$order->status == 2 ? 'selected' : ''}} value="2">Delivering</option>
-                        <option {{$order->status == 3 ? 'selected' : ''}} value="3">Complete</option>
-                        <option {{$order->status == 4 ? 'selected' : ''}} value="4">Cancelled Order</option>
-                    </select>
+                    @if($order->status == 3)
+                        <div class="alert-success text-center">Accomplished </div>
+                    @elseif($order->status == 4)
+                        <div class="alert-danger text-center">Cancelled Order </div>
+                    @else
+                        <select name="status" onchange="updateData({{$order->id}})" id="{{$order->id}}"  data-id="{{$order->id}}" class="form-control statusOrder">
+                            <option {{$order->status == 1 ? 'selected' : ''}} value="1">wait for confirmation</option>
+                            <option {{$order->status == 2 ? 'selected' : ''}} value="2">Delivering</option>
+                            <option {{$order->status == 3 ? 'selected' : ''}} value="3">Complete</option>
+                            <option {{$order->status == 4 ? 'selected' : ''}} value="4">Cancelled Order</option>
+                        </select>
+                    @endif
                 </td>
                 <td class="text-center">{{$order->payment_name}}</td>
                 <td class="text-center">{{date('Y d M', strtotime($order->created_at))}}</td>
@@ -63,10 +70,14 @@
 
            function updateData(id){
                 let status =  $('#'+id).val();
-                   console.log(status)
+                   console.log(status+ id)
+               console.log('http://127.0.0.1:8000/api/orderStatus/'+id + '/'+ status)
                    $.ajax({
                        type:'PUT',
                        url:'http://127.0.0.1:8000/api/orderStatus/'+id + '/'+ status,
+                       success: function (res) {
+                           $('#notification').html('<div class="alert alert-success">Update Success</div>')
+                       }
                    })
            }
 

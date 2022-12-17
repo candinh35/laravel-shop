@@ -204,7 +204,6 @@
 
 <!-- JS
 ============================================ -->
-
 <!-- Plugins JS -->
 <script src="{{asset('template/client/assets/js/plugins.js')}} "></script>
 

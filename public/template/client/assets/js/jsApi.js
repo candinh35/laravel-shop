@@ -12,3 +12,15 @@ console.log(filter)
         first.find(filter).removeClass('hidden')
     }
 })
+
+
+function getProduct(id) {
+    console.log(id)
+    $.ajax({
+        type: 'GET',
+        url:'http://127.0.0.1:8000/api/getOneProduct/'+ id,
+        success: function (res) {
+            console.log(res.data)
+        }
+    })
+}

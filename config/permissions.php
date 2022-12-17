@@ -1,6 +1,7 @@
 <?php
 return [
     'table_module'=>[
+        'dashboard',
         'category',
         'banner',
         'brand',

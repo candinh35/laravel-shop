@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Client\CartController;
@@ -25,13 +26,20 @@ use App\Http\Controllers\Client\BlogCommentController;
 use App\Http\Controllers\Client\ShopController;
 use App\Http\Controllers\LoginContrller;
 use Illuminate\Support\Facades\Route;
+use  Stichoza\GoogleTranslate\GoogleTranslate;
+
+Route::get('translate', [LoginContrller::class, 'loginGoogle']);
 
 Route::get('login', [LoginContrller::class, 'index'])->name('login');
 Route::post('login/store', [LoginContrller::class, 'store'])->name('checkLogin');
-
+Route::get('admin-logout', [LoginContrller::class, 'logout'])->name('admin.logout');
 
 //  Quản lý Admin
 Route::middleware('auth')->group(function (){
+
+    Route::get('dashboard', [DashboardController::class ,'index'])->name('dashboard');
+
+
     Route::middleware('decentralization')->group(function () {
         Route::resource('user', UserController::class);
         Route::resource('category', CategoryController::class);
@@ -45,6 +53,7 @@ Route::middleware('auth')->group(function (){
         Route::resource('admin/contact', ContactController::class);
         Route::resource('role', RoleController::class);
         Route::resource('permission', PermissionController::class);
+
 
         Route::get('orderPdf/{checkout_code}', [OrderController::class, 'print_order'])->name('order.inPdf');
     });
@@ -82,9 +91,14 @@ Route::prefix('checkout')->group(function (){
 
 
 
-Route::get('client/login', [ClientLoginController::class, 'index'])->name('client_login');
-Route::post('client/login/check', [ClientLoginController::class, 'login'])->name('client_check_login');
-Route::get('client/logout', [ClientLoginController::class, 'logout'])->name('client_check_logout');
+Route::prefix('client')->group(function (){
+    Route::get('/login', [ClientLoginController::class, 'index'])->name('client_login');
+    Route::post('/login/check', [ClientLoginController::class, 'login'])->name('client_check_login');
+    Route::get('/logout', [ClientLoginController::class, 'logout'])->name('client_check_logout');
+
+    Route::post('/register',[ClientLoginController::class, 'register'])->name('client_register');
+});
+
 Route::get('/about', [HomeController::class, 'index'])->name('About Us');
 Route::post('postComment', [BlogCommentController::class, 'add'])->name('postComment');
 Route::get('deleteComment/{id}', [BlogCommentController::class, 'delete'])->name('deleteComment');
