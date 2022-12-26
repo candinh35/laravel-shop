@@ -13,6 +13,8 @@ use App\repositories\category\CategoryRepository;
 use App\repositories\category\CategoryRepositoryInterface;
 use App\repositories\blog\BlogRepository;
 use App\repositories\blog\BlogRepositoryInterface;
+use App\repositories\customer\CustomerRepository;
+use App\repositories\customer\CustomerRepositoryInterface;
 use App\repositories\menu\MenuRepository;
 use App\repositories\menu\MenuRepositoryInterface;
 use App\repositories\order\OrderRepository;
@@ -76,6 +78,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(
             OrderRepositoryInterface::class,
             OrderRepository::class,
+        );
+        $this->app->singleton(
+            CustomerRepositoryInterface::class,
+            CustomerRepository::class,
         );
 
     }

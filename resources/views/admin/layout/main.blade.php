@@ -215,6 +215,7 @@
                                 <form>
                                     <div class="input-group">
                                         <input type="search" name="search" id="search"
+                                               {{old('search')}}
                                                placeholder="Search everything" class="form-control">
                                         <span class="input-group-append">
                                                 <button type="submit" class="btn btn-primary">

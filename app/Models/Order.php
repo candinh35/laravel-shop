@@ -9,13 +9,14 @@ class Order extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id',
+        'customer_id',
         'name',
         'email',
         'address',
         'status',
         'phone',
         'payment_name',
+        'total',
     ];
 
         public function scopeSearch($query)

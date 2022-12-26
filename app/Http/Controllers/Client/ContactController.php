@@ -11,8 +11,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        return view('client.contact', compact('user'));
+        return view('client.contact');
     }
 
     public function feedback(Request $request)

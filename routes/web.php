@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Admin\Api\ProductCommentController;
 use App\Http\Controllers\Admin\BackgroundController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
@@ -14,6 +13,8 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\SocialController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\Client\CheckOutController;
 use App\Http\Controllers\Client\ClientLoginController;
@@ -27,12 +28,32 @@ use App\Http\Controllers\Client\ShopController;
 use App\Http\Controllers\LoginContrller;
 use Illuminate\Support\Facades\Route;
 use  Stichoza\GoogleTranslate\GoogleTranslate;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('translate', [LoginContrller::class, 'loginGoogle']);
 
 Route::get('login', [LoginContrller::class, 'index'])->name('login');
-Route::post('login/store', [LoginContrller::class, 'store'])->name('checkLogin');
+Route::get('register', [LoginContrller::class, 'create'])->name('register');
+Route::post('register/store', [LoginContrller::class, 'store'])->name('register_store');
+Route::post('login/mana', [LoginContrller::class, 'login'])->name('checkLogin');
 Route::get('admin-logout', [LoginContrller::class, 'logout'])->name('admin.logout');
+
+// login bang facebook
+Route::get('/auth/facebook', function () {
+    return Socialite::driver('facebook')->redirect();
+});
+
+Route::get('/getInfo-facebook/{social}', [SocialController::class, 'getInfo'])->name('login-face');
+Route::get('/checkInfo-facebook/{social}', [SocialController::class, 'checkInfo']);
+
+Route::get('/chinh-sach-rieng-tu', function (){
+    return '<h1>chinh sach rieng tu</h1>';
+});
+
+
+//thanh toán bằng momo
+
+Route::post('/momo_payment', [CheckOutController::class, 'momo_payment'])->name('momo_payment');
 
 //  Quản lý Admin
 Route::middleware('auth')->group(function (){
@@ -42,6 +63,7 @@ Route::middleware('auth')->group(function (){
 
     Route::middleware('decentralization')->group(function () {
         Route::resource('user', UserController::class);
+        Route::resource('customer', CustomerController::class);
         Route::resource('category', CategoryController::class);
         Route::resource('menu', MenuController::class);
         Route::resource('brand', BrandController::class);

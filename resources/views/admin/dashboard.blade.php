@@ -1,10 +1,9 @@
 @extends('admin.layout.main')
 
 @section('content')
+    @if($data != null )
     <div class="row">
         <div class="col-lg-8">
-
-
 
     <html>
     <head>
@@ -44,15 +43,16 @@
             </tr>
             </thead>
             <tbody>
-            @foreach($users as $user)
+            @foreach($customers as $customer)
             <tr>
-                <td>{{$user->name}}</td>
-                <td>{{$user->totalOrder}}</td>
-                <td>{{number_format($user->totalPrice)}} Đ</td>
+                <td>{{$customer->name}}</td>
+                <td>{{$customer->totalOrder}}</td>
+                <td>{{number_format($customer->totalPrice)}} Đ</td>
             </tr>
             @endforeach
             </tbody>
         </table>
     </div>
     </div>
+    @endif
 @endsection

@@ -43,11 +43,11 @@
                             @csrf
                             <div>
                                 <label> Your Name (required)</label>
-                                <input name="name" placeholder="Name *" type="text" value="{{$user->name}}" class="@error('name') is-invalid @enderror">
+                                <input name="name" placeholder="Name *" type="text" value="" class="@error('name') is-invalid @enderror">
                             </div>
                             <div>
                                 <label>  Your Email (required)</label>
-                                <input name="email" placeholder="Email *" type="email" value="{{$user->email}}" class="@error('email') is-invalid @enderror">
+                                <input name="email" placeholder="Email *" type="email" value="" class="@error('email') is-invalid @enderror">
                             </div>
                             <div class="contact_textarea">
                                 <label>  Your Message</label>

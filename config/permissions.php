@@ -9,6 +9,7 @@ return [
         'menu',
         'role',
         'user',
+        'customer',
         'product',
         'contact',
         'blog',

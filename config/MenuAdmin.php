@@ -2,6 +2,7 @@
 return [
   'menu'=>[
       'user',
+      'customer',
       'product',
       'menu',
       'banner',

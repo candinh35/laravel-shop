@@ -25,7 +25,9 @@
             <x-alert/>
             <form action="{{route('addOrder')}}" method="post" class="checkout-form">
                 @csrf
+                <input type="hidden" name="customer_id" value="{{$customer->id}}">
                 <input type="hidden" name="status" value="1">
+                <input type="hidden" name="total" value="{{$total}}">
                 <div class="row">
                     @if(Cart::count() > 0)
                         <div class="col-lg-6">
@@ -38,7 +40,7 @@
                                         id="fir"
                                         class="@error('name') is-invalid @enderror"
                                         name="name"
-                                        value="{{$user->name}}"
+                                        value="{{$customer->name}}"
                                     >
                                 </div>
 
@@ -49,7 +51,7 @@
                                            id="email"
                                            class="@error('email') is-invalid @enderror"
                                            name="email"
-                                           value="{{$user->email}}"
+                                           value="{{$customer->email}}"
                                     >
                                 </div>
                                 <div class="col-lg-6">
@@ -58,7 +60,7 @@
                                            id="phone"
                                            class="@error('phone') is-invalid @enderror"
                                            name="phone"
-                                           value="{{$user->phone}}"
+                                           value="{{$customer->phone}}"
                                     >
                                 </div>
                                 <div class="col-lg-12">
@@ -66,7 +68,7 @@
                                     <input type="text"
                                            class="@error('address') is-invalid @enderror"
                                            name="address"
-                                           value="{{$user->address}}"
+                                           value="{{$customer->address}}"
                                     >
                                 </div>
 
@@ -94,10 +96,18 @@
                                             </label>
                                         </div>
                                         <div class="pc-item">
-                                            <label for="pc-paypal">
-                                                Online Payment
-                                                <input type="radio" id="pc-paypal" name="payment_name"
-                                                       value="online_payment">
+                                            <label for="pc-vnpay">
+                                                VNpay Payment
+                                                <input type="radio" id="pc-vnpay" name="payment_name"
+                                                       value="vnpay_payment">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </div>
+                                        <div class="pc-item">
+                                            <label for="pc-momo">
+                                                Momo Payment
+                                                <input type="radio" id="pc-momo" name="payment_name"
+                                                       value="momo_payment">
                                                 <span class="checkmark"></span>
                                             </label>
                                         </div>
@@ -105,6 +115,8 @@
                                     <div class="order-btn">
                                         <button type="submit" class="site-btn place-btn">Place Order</button>
                                     </div>
+
+
                                 </div>
                             </div>
 
@@ -115,6 +127,7 @@
                     @endif
                 </div>
             </form>
+
         </div>
     </div>
 @endsection

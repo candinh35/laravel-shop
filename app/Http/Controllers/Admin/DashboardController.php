@@ -9,33 +9,38 @@ use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
-    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
+    public function index()
     {
-        $results = DB::table('products')
-            ->join('order_details', 'products.id', 'order_details.product_id')
-            ->selectRaw('count(order_details.product_id) as total, products.name')
-            ->groupBy('products.name')
-            ->orderBy('total', 'DESC')
-            ->limit(5)
-            ->get();
-        $data = "";
-        foreach ($results as $result){
-            $data .= "['".$result->name."',    ".$result->total."],";
+        try {
+            $results = DB::table('products')
+                ->join('order_details', 'products.id', 'order_details.product_id')
+                ->selectRaw('count(order_details.product_id) as total, products.name')
+                ->groupBy('products.name')
+                ->orderBy('total', 'DESC')
+                ->limit(5)
+                ->get();
+            $data = "";
+            foreach ($results as $result){
+                $data .= "['".$result->name."',    ".$result->total."],";
+            }
+            $customers = DB::table('customers')
+                ->join('orders', 'customers.id', 'orders.customer_id')
+                ->selectRaw('count(orders.customer_id) as totalOrder, SUM(orders.total) as totalPrice, customers.name')
+                ->groupBy('customers.name')
+                ->orderBy('total', 'DESC')
+                ->limit(5)
+                ->get();
+
+//            dd($customers);
+            return view('admin.dashboard',[
+                'title'=>'dashboard',
+                'model'=>'dashboard',
+                'data'=>$data,
+                'customers'=>$customers
+            ]);
+        }catch (\Exception $err){
+
         }
 
-        $users = DB::table('users')
-            ->join('orders', 'users.id', 'orders.user_id')
-            ->join('order_details', 'orders.id', 'order_details.order_id')
-            ->selectRaw('count(orders.user_id) as totalOrder, SUM(order_details.total) as totalPrice, users.name')
-            ->groupBy('users.name')
-            ->orderBy('total', 'DESC')
-            ->limit(5)
-            ->get();
-        return view('admin.dashboard',[
-            'title'=>'dashboard',
-            'model'=>'dashboard',
-            'data'=>$data,
-            'users'=>$users
-        ]);
     }
 }

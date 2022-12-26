@@ -55,6 +55,8 @@
                                                class="form-check-input">
                                         <label for="exampleCheck" class="form-check-label">Keep me logged in</label>
                                     </div>
+                                        <label for="exampleCheck" class="form-check-label mt-2"><a href="{{route('register')}}">If you do not have an account, register here</a></label>
+                                        <label for="exampleCheck" class="form-check-label mt-2"><a href="{{route('login-face','facebook')}}">Login facebook</a></label>
                                     <div class="modal-footer clearfix">
                                         <div class="float-right">
                                             <button type="submit" class="btn btn-primary btn-lg">Login to Dashboard</button>

@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 
 class OrderDetailController extends Controller
 {
-    public function index($user_id)
+    public function index($customer_id)
     {
 
-        $orders = Order::where('user_id', $user_id)->orderByDesc('created_at')->get();
+        $orders = Order::where('customer_id', $customer_id)->orderByDesc('created_at')->get();
         return view('client.orderDetail', compact('orders'));
     }
 

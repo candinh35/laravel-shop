@@ -35,7 +35,7 @@ class CartController extends Controller
            'id'=>$product->id,
            'name'=>$product->name,
            'qty'=>$request->quantity,
-           'price'=>$product->sale_price??$product->price,
+           'price'=>($product->sale_price ?$product->price - $product->sale_price: $product->price ),
            'weight'=>0,
            'options'=>[
                'image'=>$product->path_image,

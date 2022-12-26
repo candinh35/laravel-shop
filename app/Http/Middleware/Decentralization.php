@@ -20,7 +20,6 @@ class Decentralization
         if (!Auth::check()){
             return redirect()->route('login');
         }
-
         $user = Auth::user();
         $route = $request->route()->getName();
         if ($user->can($route)){
