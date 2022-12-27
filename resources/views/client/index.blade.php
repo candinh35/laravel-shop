@@ -89,7 +89,7 @@
                                             </div>
                                         </div>
                                         <div class="product_content">
-                                            <h3><a href="product-details.html">{{$product->name}}</a></h3>
+                                            <h3><a href="{{route('product_detail', $product->id)}}">{{$product->name}}</a></h3>
                                             @if($product->sale_price != null)
                                             <span class="current_price">{{number_format($product->price - $product->sale_price)}}Đ</span>
                                             <span class="old_price">{{number_format($product->price)}}Đ</span>
@@ -150,13 +150,13 @@
                             <div class="col-lg-3 itemProduct">
                                 <div class="single_product">
                                     <div class="product_thumb">
-                                        <a class="primary_img" href="product-details.html"><img src="{{$bestSale->path_image}}" alt=""></a>
+                                        <a class="primary_img" href="{{route('product_detail', $bestSale->id)}}"><img src="{{$bestSale->path_image}}" alt=""></a>
                                         @foreach($bestSale->productImages as $proImage)
-                                            <a class="secondary_img" href="product-details.html"><img src="{{$proImage->path_image}}" alt=""></a>
+                                            <a class="secondary_img" href="{{route('product_detail', $bestSale->id)}}"><img src="{{$proImage->path_image}}" alt=""></a>
                                             @break(false)
                                         @endforeach
                                         <div class="quick_button">
-                                            <a href="#" title="quick_view">View products</a>
+                                            <a href="{{route('product_detail', $bestSale->id)}}" title="quick_view">View products</a>
 
                                         </div>
 
@@ -167,7 +167,7 @@
                                         </div>
                                     </div>
                                     <div class="product_content">
-                                        <h3><a href="product-details.html">{{$bestSale->name}}</a></h3>
+                                        <h3><a href="{{route('product_detail', $bestSale->id)}}">{{$bestSale->name}}</a></h3>
                                         @if($bestSale->sale_price != null)
                                           <span class="current_price">{{number_format($bestSale->price - $bestSale->sale_price)}}Đ</span>
                                             <span class="old_price">{{number_format($bestSale->price)}}Đ</span>

@@ -57,9 +57,9 @@ class HomeController extends Controller
         $backgroundLate = array_slice($backgroundLate, 3);
         $categories = $this->categoryRepo->getAll();
         $products = $this->productRepo->getProductHome();
-        $bestSales = Product::select(DB::raw('SUM(order_details.quantity) as total'),'products.name', 'products.path_image', 'products.price', 'products.sale_price', 'products.category_id')
+        $bestSales = Product::select(DB::raw('SUM(order_details.quantity) as total'),'products.id','products.name',  'products.path_image', 'products.price', 'products.sale_price', 'products.category_id')
             ->join('order_details','products.id', 'order_details.product_id')
-            ->groupBy('products.name', 'products.path_image', 'products.price', 'products.sale_price','products.category_id')
+            ->groupBy('products.id','products.name',  'products.path_image', 'products.price', 'products.sale_price','products.category_id')
             ->orderByDesc('total')
             ->limit(5)
             ->get();

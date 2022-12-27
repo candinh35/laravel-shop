@@ -20,20 +20,28 @@ class ProductCommentController extends Controller
     }
    public function addForm(Request $request)
    {
-//       $validator = Validator::make($request->all(), [
-//           'name' => 'required|max:255',
-//           'email' => 'required|max:255',
-//           'message' => 'required|max:255',
-//           'rating'=> 'required'
-//       ]);
-//       if ($validator->fails()) {
-//           return redirect('post/create')
-//               ->withErrors($validator)
-//               ->withInput();
-//       }
+       $validator = Validator::make($request->all(), [
+           'name' => 'required|max:255',
+           'email' => 'required|max:255',
+           'message' => 'required|max:255',
+       ]);
 
-        $data = $request->only('user_id', 'product_id', 'name', 'email', 'message', 'rating');
-       $comments = Product_comment::create($data);
+       if ($validator->fails()) {
+          return response()->json([
+               'data'=>$validator->errors()->all(),
+               'code'=>400,
+               'message'=>'Failed!'
+           ]);
+       }
+
+
+       $comments = Product_comment::create([
+           'user_id'=>$request->userId,
+           'product_id'=>$request->productId,
+           'name'=>$request->name,
+           'email'=>$request->email,
+           'message'=>$request->message
+       ]);
        if ($comments){
            return response()->json([
                'data'=>$comments,
@@ -41,11 +49,7 @@ class ProductCommentController extends Controller
                'message'=>'is Ok!'
            ]);
        }
-       return response()->json([
-           'data'=>null,
-           'code'=>400,
-           'message'=>'Failed!'
-       ]);
+
 
    }
 }

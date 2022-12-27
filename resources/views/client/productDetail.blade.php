@@ -197,20 +197,20 @@ define('BASE_URL', "http://127.0.0.1:8000/");
 
                                 </div>
                                 <div class="product_review_form">
-                                    <form action="" id="formAdd" method="post">
+                                    <form action="">
                                         @csrf
-                                        <input type="hidden" name="product_id" value="{{$product->id}}">
-                                        <input type="hidden" name="user_id" value="{{Auth::id()}}}">
+                                        <input type="hidden" id="product_id" value="{{$product->id}}">
+                                        <input type="hidden" id="user_id" value="{{Auth::id()}}">
                                         <h2>Add a review </h2>
                                         <p>Your email address will not be published. Required fields are marked </p>
                                         <div class="row">
                                             <div class="col-12">
                                                 <label for="review_comment">Your review </label>
-                                                <textarea name="message" id="review_comment"></textarea>
+                                                <textarea name="message" id="message"></textarea>
                                             </div>
                                             <div class="col-lg-6 col-md-6">
                                                 <label for="author">Name</label>
-                                                <input id="author" name="name" type="text">
+                                                <input id="name" name="name" type="text">
 
                                             </div>
                                             <div class="col-lg-6 col-md-6">
@@ -218,27 +218,27 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                                                 <input id="email" name="email" type="text">
                                             </div>
                                         </div>
-                                        <div class="personal-rating">
-                                            <h6>Your Rating</h6>
-                                            <div class="rate">
-                                                <input type="radio" id="star5" name="rating"
-                                                       value="5" />
-                                                <label for="star5" title="text">5 stars</label>
-                                                <input type="radio" id="star4" name="rating"
-                                                       value="4" />
-                                                <label for="star4" title="text">4 stars</label>
-                                                <input type="radio" id="star3" name="rating"
-                                                       value="3" />
-                                                <label for="star3" title="text">3 stars</label>
-                                                <input type="radio" id="star2" name="rating"
-                                                       value="2" />
-                                                <label for="star2" title="text">2 stars</label>
-                                                <input type="radio" id="star1" name="rating"
-                                                       value="1" />
-                                                <label for="star1" title="text">1 star</label>
-                                            </div>
-                                        </div>
-                                        <button type="submit">Submit</button>
+{{--                                        <div class="personal-rating">--}}
+{{--                                            <h6>Your Rating</h6>--}}
+{{--                                            <div class="rate">--}}
+{{--                                                <input type="radio" id="star5" class="rating"--}}
+{{--                                                       value="5"/>--}}
+{{--                                                <label for="star5" title="text">5 stars</label>--}}
+{{--                                                <input type="radio" id="star4" class="rating"--}}
+{{--                                                       value="4"/>--}}
+{{--                                                <label for="star4" title="text">4 stars</label>--}}
+{{--                                                <input type="radio" id="star3" class="rating"--}}
+{{--                                                       value="3"/>--}}
+{{--                                                <label for="star3" title="text">3 stars</label>--}}
+{{--                                                <input type="radio" id="star2" class="rating"--}}
+{{--                                                       value="2"/>--}}
+{{--                                                <label for="star2" title="text">2 stars</label>--}}
+{{--                                                <input type="radio" id="star1" class="rating"--}}
+{{--                                                       value="1"/>--}}
+{{--                                                <label for="star1" title="text" class="rating">1 star</label>--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+                                        <button type="submit" id="btn-comment">Submit</button>
                                     </form>
                                 </div>
                             </div>
@@ -344,10 +344,12 @@ define('BASE_URL', "http://127.0.0.1:8000/");
 
             //    get Api
             load_data();
+
             function load_data() {
                 let id = {{$product->id}};
                 $.get('http://127.0.0.1:8000/api/product/comment/' + id, function (res) {
-                    let comments = res.data; console.log(res)
+                    let comments = res.data;
+                    console.log(res)
                     let _li = '';
                     comments.forEach(function (item) {
 
@@ -360,18 +362,18 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                         _li += '</div>'
                         _li += '<div class="avatar-text">'
                         _li += '<div class="at-rating">'
-                             for (let i = 0; i < 5 ; i++){
-                                 if (i < item.rating){
-                                     _li += '<i class="fa fa-star"></i>'
-                                 }else {
-                                     _li += '<i class="fa fa-star-o"></i>'
-                                 }
-                             }
+                        for (let i = 0; i < 5; i++) {
+                            if (i < item.rating) {
+                                _li += '<i class="fa fa-star"></i>'
+                            } else {
+                                _li += '<i class="fa fa-star-o"></i>'
+                            }
+                        }
                         _li += '</div>'
-                        _li += '<h5>'+item.name+''
-                        _li += ' <span>'+item.created_at+'</span>'
+                        _li += '<h5>' + item.name + ''
+                        _li += ' <span>' + item.created_at + '</span>'
                         _li += '</h5>'
-                        _li += '<div class="at-reply">'+item.message+'</div>'
+                        _li += '<div class="at-reply">' + item.message + '</div>'
                         _li += ' </div>'
                         _li += '</div>'
 
@@ -381,15 +383,34 @@ define('BASE_URL', "http://127.0.0.1:8000/");
             }
 
 
-            $('#formAdd').on('submit', function (even){
-               even.preventDefault();
-               let formData = $(this).serialize();
-               console.log(formData)
-                $.post('http://127.0.0.1:8000/api/product/comment/add' , formData, function (res) {
-                    console.log(res)
-                    load_data();
+            $('#btn-comment').click(function (e) {
+                e.preventDefault();
+                let email = $('#email').val();
+                let name = $('#name').val();
+                let message = $('#message').val();
+                let productId = $('#product_id').val();
+                let userId = $('#user_id').val();
+                let rating = $('.rate').val();
+                console.log(rating)
+                $.ajax({
+                    url: 'http://127.0.0.1:8000/product/addComment',
+                    type: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        productId: productId,
+                        userId: userId,
+                        email: email,
+                        name: name,
+                        message: message
+                    },
+                    success: function (res) {
+                        load_data();
+                        email.val(null);
+                        name.val(null);
+                        message.val(null)
+                    }
                 })
-            })
+            });
         });
     </script>
 @endsection

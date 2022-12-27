@@ -91,6 +91,11 @@ Route::prefix('shop')->group(function (){
     Route::get('/color/{color_name}', [ShopController::class, 'colors'])->name('colorName');
 });
 
+// Bình luận sản phẩm
+
+Route::post('product/addComment', [\App\Http\Controllers\Admin\Api\ProductCommentController::class, 'addForm']);
+Route::post('product/comment/{id}', [\App\Http\Controllers\Admin\Api\ProductCommentController::class, 'index']);
+
 Route::get('/product/detail/{id}', [ProductDetailController::class, 'index'])->name('product_detail');
 
 // Hiện thị giỏ hàng
