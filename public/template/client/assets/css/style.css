@@ -6827,6 +6827,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .blog_thumb {
   position: relative;
   margin-bottom: 22px;
+    aspect-ratio: 1/1;
+    object-fit: contain;
 }
 .blog_thumb > a {
   display: block;
