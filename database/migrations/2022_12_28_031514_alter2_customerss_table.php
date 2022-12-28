@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_socials', function (Blueprint $table) {
-            $table->integer('id');
-            $table->string('provider_user_id');
+        Schema::table('customers', function (Blueprint $table) {
             $table->string('provider');
-            $table->integer('user');
-            $table->timestamps();
+            $table->string('provider_id');
         });
     }
 
@@ -29,6 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_socials');
+        Schema::table('customers', function (Blueprint $table) {
+            $table->dropColumn('provider');
+            $table->dropColumn('provider_id');
+        });
     }
 };

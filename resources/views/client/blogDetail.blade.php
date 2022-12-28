@@ -81,9 +81,16 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                 <div class="col-lg-9 col-md-12">
                     <!--blog grid area start-->
                     <div class="blog_details_wrapper">
+                        @if($blogDetail->path_image == null)
+                            asd
+                            <div class="blog__thumb">
+                                <a href="#"><img src="{{asset('/template/admin/css/assets/images/_default-user.png')}}" alt=""></a>
+                            </div>
+                        @else
                         <div class="blog__thumb">
                             <a href="#"><img src="{{asset($blogDetail->path_image) }}" alt=""></a>
                         </div>
+                        @endif
                         <div class="blog_info_wrapper">
                             <div class="blog_info_inner">
                                 <div class="post__date">
@@ -116,7 +123,7 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                                             </div>
                                         </div>
                                         <p>{{$blogComment->message}}</p>
-                                        @if(Auth::id() == $blogComment->user_id)
+                                        @if( Auth::guard('cus')->id() == $blogComment->user_id)
                                         <div class="comment_reply">
                                             <a href="{{route('deleteComment',$blogComment->id)}}">Delete</a>
                                         </div>
@@ -132,7 +139,7 @@ define('BASE_URL', "http://127.0.0.1:8000/");
                                 <p>Your email address will not be published.</p>
                                 <form action="{{route('postComment')}}" method="post">
                                     @csrf
-                                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                                    <input type="hidden" name="user_id" value="{{Auth::guard('cus')->id()}}">
                                     <input type="hidden" name="blog_id" value="{{$blogDetail->id}}">
                                     <div class="row">
                                         <div class="col-12">

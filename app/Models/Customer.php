@@ -27,7 +27,9 @@ class Customer extends Authenticatable
         'password',
         'phone',
         'path_image',
-        'address'
+        'address',
+        'provider',
+        'provider_id'
     ];
 
     /**

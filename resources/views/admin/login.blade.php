@@ -56,8 +56,13 @@
                                         <label for="exampleCheck" class="form-check-label">Keep me logged in</label>
                                     </div>
                                         <label for="exampleCheck" class="form-check-label mt-2"><a href="{{route('register')}}">If you do not have an account, register here</a></label>
-                                        <label for="exampleCheck" class="form-check-label mt-2"><a href="{{route('login-face','facebook')}}">Login facebook</a></label>
-                                    <div class="modal-footer clearfix">
+                                    <div class="modal-footer clearfix flex-row justify-content-around">
+                                        <div class="float-right">
+                                            <button type="submit" class="btn btn-info btn-lg">Facebook Login</button>
+                                        </div>
+                                        <div class="float-right">
+                                            <button type="submit" class="btn btn-warning btn-lg">Google Login</button>
+                                        </div>
                                         <div class="float-right">
                                             <button type="submit" class="btn btn-primary btn-lg">Login to Dashboard</button>
                                         </div>

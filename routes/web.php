@@ -25,6 +25,7 @@ use App\Http\Controllers\Client\BlogController as ClientBlogController;
 use App\Http\Controllers\Client\ProductDetailController;
 use App\Http\Controllers\Client\BlogCommentController;
 use App\Http\Controllers\Client\ShopController;
+use App\Http\Controllers\Client\SocialAuthController;
 use App\Http\Controllers\LoginContrller;
 use Illuminate\Support\Facades\Route;
 use  Stichoza\GoogleTranslate\GoogleTranslate;
@@ -38,27 +39,11 @@ Route::post('register/store', [LoginContrller::class, 'store'])->name('register_
 Route::post('login/mana', [LoginContrller::class, 'login'])->name('checkLogin');
 Route::get('admin-logout', [LoginContrller::class, 'logout'])->name('admin.logout');
 
-// login bang facebook
-Route::get('/auth/facebook', function () {
-    return Socialite::driver('facebook')->redirect();
-});
-
-Route::get('/getInfo-facebook/{social}', [SocialController::class, 'getInfo'])->name('login-face');
-Route::get('/checkInfo-facebook/{social}', [SocialController::class, 'checkInfo']);
-
-Route::get('/chinh-sach-rieng-tu', function (){
-    return '<h1>chinh sach rieng tu</h1>';
-});
-
-
-//thanh toán bằng momo
-
-Route::post('/momo_payment', [CheckOutController::class, 'momo_payment'])->name('momo_payment');
 
 //  Quản lý Admin
-Route::middleware('auth')->group(function (){
+Route::middleware('auth')->group(function () {
 
-    Route::get('dashboard', [DashboardController::class ,'index'])->name('dashboard');
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
     Route::middleware('decentralization')->group(function () {
@@ -85,7 +70,7 @@ Route::middleware('auth')->group(function (){
 
 Route::get('/', [HomeController::class, 'index'])->name('Home');
 
-Route::prefix('shop')->group(function (){
+Route::prefix('shop')->group(function () {
     Route::get('/', [ShopController::class, 'index'])->name('Shop');
     Route::get('/{category_name}', [ShopController::class, 'category'])->name('categoryName');
     Route::get('/color/{color_name}', [ShopController::class, 'colors'])->name('colorName');
@@ -99,7 +84,7 @@ Route::post('product/comment/{id}', [\App\Http\Controllers\Admin\Api\ProductComm
 Route::get('/product/detail/{id}', [ProductDetailController::class, 'index'])->name('product_detail');
 
 // Hiện thị giỏ hàng
-Route::prefix('cart')->group(function (){
+Route::prefix('cart')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('product_cart');
     Route::post('/add', [CartController::class, 'add'])->name('product_cart_add');
     Route::get('/update', [CartController::class, 'update'])->name('product_cart_update');
@@ -109,21 +94,19 @@ Route::prefix('cart')->group(function (){
 
 
 // hiện thị phần CHeck out
-Route::prefix('checkout')->group(function (){
+Route::prefix('checkout')->group(function () {
     Route::get('/', [CheckOutController::class, 'index'])->name('product_cart_checkout');
     Route::post('/', [CheckOutController::class, 'addOrder'])->name('addOrder');
     Route::get('/vnPayCheck', [CheckOutController::class, 'vnPayCheck']);
 });
 
 
-
-
-Route::prefix('client')->group(function (){
+Route::prefix('client')->group(function () {
     Route::get('/login', [ClientLoginController::class, 'index'])->name('client_login');
     Route::post('/login/check', [ClientLoginController::class, 'login'])->name('client_check_login');
     Route::get('/logout', [ClientLoginController::class, 'logout'])->name('client_check_logout');
 
-    Route::post('/register',[ClientLoginController::class, 'register'])->name('client_register');
+    Route::post('/register', [ClientLoginController::class, 'register'])->name('client_register');
 });
 
 Route::get('/about', [HomeController::class, 'index'])->name('About Us');
@@ -132,20 +115,29 @@ Route::get('deleteComment/{id}', [BlogCommentController::class, 'delete'])->name
 
 
 // info Order
-Route::prefix('orderDetail')->group(function (){
+Route::prefix('orderDetail')->group(function () {
     Route::get('/{user_id}', [OrderDetailController::class, 'index'])->name('orderDetail');
     Route::get('/update/{order_id}', [OrderDetailController::class, 'update'])->name('updateOrder');
 });
 
 
-Route::prefix('blogs')->group(function (){
+Route::prefix('blogs')->group(function () {
     Route::get('/', [ClientBlogController::class, 'index'])->name('Blogs');
     Route::get('/detail/{id}', [ClientBlogController::class, 'detail'])->name('blog_detail');
 });
 
 
-Route::prefix('contact')->group(function (){
+Route::prefix('contact')->group(function () {
     Route::get('/', [ClientContactController::class, 'index'])->name('Contact Us');
-   Route::post('/feedback', [ClientContactController::class, 'feedback'])->name('feedback');
+    Route::post('/feedback', [ClientContactController::class, 'feedback'])->name('feedback');
 });
 
+// login google
+
+Route::get('/login-google', [SocialAuthController::class, 'redirectToProvider'])->name('login_google');
+Route::get('/{provide}/callback', [SocialAuthController::class, 'handleProviderCallback']);
+
+// login bang facebook
+
+Route::get('/login-facebook', [SocialAuthController::class, 'login_facebook'])->name('login_face');
+Route::get('/login/callback', [SocialAuthController::class, 'callback_facebook']);

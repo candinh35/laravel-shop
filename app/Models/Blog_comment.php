@@ -21,6 +21,6 @@ class Blog_comment extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(Customer::class, 'id', 'user_id');
     }
 }

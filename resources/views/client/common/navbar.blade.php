@@ -22,9 +22,15 @@
         <div class="cart_area">
             <div class="middel_links">
                 <ul>
+                    @if(Auth::guard('cus')->check())
+                        <li>{{Auth::guard('cus')->user()->name}}</li>
+                        <li><a href="{{route('client_check_logout')}}">Logout</a></li>
+                        <li><a href="{{route('orderDetail',Auth::guard('cus')->id() )}}">Order Manager</a></li>
+                    @else
                     <li><a href="{{route('client_login')}}">Login</a></li>
                     <li>/</li>
-                    <li><a href="login.html">Register</a></li>
+                    <li><a href="{{route('client_login')}}">Register</a></li>
+                    @endif
                 </ul>
 
             </div>
@@ -231,6 +237,7 @@
                                         <li class="{{request()->segment(1) == $menu->name ? 'active' : ''}}"><a
                                                 href="{{route($menu->name)}}">{{$menu->name}}</a></li>
                                     @endforeach
+
                                 </ul>
                             </nav>
                         </div>

@@ -40,13 +40,22 @@
                                 <input type="password" name="password" class="@error('password') is-invalid @enderror" value="{{old('password')}}">
                             </p>
                             <div class="login_submit">
-                                <a href="#">Lost your password?</a>
+                                <a class="float-left" href="#">Lost your password?</a>
                                 <label for="remember">
                                     <input id="remember" type="checkbox" name="remember">
                                     Remember me
                                 </label>
-                                <button type="submit">login</button>
-
+                                <div class="pb-3 mt-4 d-flex justify-content-around">
+                                    <div class="">
+                                        <a href="{{route('login_face')}}" class="btn btn-info">Facebook Login</a>
+                                    </div>
+                                    <div class="">
+                                        <a href="{{route('login_google')}}" type="submit" class="btn btn-warning">Google Login</a>
+                                    </div>
+                                    <div class="">
+                                        <button type="submit" class="btn btn-primary">Login</button>
+                                    </div>
+                                </div>
                             </div>
 
                         </form>
