@@ -3,10 +3,7 @@
 namespace App\Http\Controllers\Client;
 
 use App\Models\Customer;
-use Illuminate\Http\Request;
-use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Response;
 use Laravel\Socialite\Facades\Socialite, Illuminate\Support\Facades\Auth, Illuminate\Support\Facades\Redirect, Illuminate\Support\Facades\Session, Illuminate\Support\Facades\URL;
 use App\User;
 
@@ -69,6 +66,7 @@ class SocialAuthController extends Controller
 
     public function callback_facebook()
     {
+        dd(4);
         $provider = Socialite::driver('facebook')->user();
         dd($provider);
 //        $account = Social::where('provider', 'facebook')->where('provider_user_id', $provider->getId())->first();

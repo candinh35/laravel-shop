@@ -140,4 +140,4 @@ Route::get('/{provide}/callback', [SocialAuthController::class, 'handleProviderC
 // login bang facebook
 
 Route::get('/login-facebook', [SocialAuthController::class, 'login_facebook'])->name('login_face');
-Route::get('/login/callback', [SocialAuthController::class, 'callback_facebook']);
+Route::get('/login-facebook/callback', [SocialAuthController::class, 'callback_facebook']);
